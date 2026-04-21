@@ -2,17 +2,17 @@ import json
 import requests
 from typing import Dict, Any
 
-from src.models import *
-from src.constants import *
+from app.src.models import *
+from app.src.constants import *
 
 def create_prompt(sms_text: str) -> str:
     """ Создание системного промпта """
     return (
-        f"Ты — аналитик сотовой связи. Твоя задача - определить, является ли следующее SMS-сообщение спамом. "
-        f"Отвечай только в виде JSON с двумя полями: "
-        f"is_spam - является ли сообщение спамом (true/false) и "
-        f"reason - кратое объяснение решения. "
-        f"Текст SMS: \"{sms_text}\""
+        f"Классифицируй SMS-сообщение как 'спам'/'не спам'."
+        f"Признаки спама: реклама, мошенничество, фишинг, запрос личных данных, подозрительные ссылки. "
+        f"Определи, является ли следующее SMS-сообщение спамом: \"{sms_text}\". "
+        f"Ответь исключительно в виде JSON с двумя полями: "
+        f"'is_spam' (булево, true если спам, false если не спам) и 'reason' (краткое объяснение решения)"
     )
 
 def call_llm(prompt: str) -> Dict[str, Any]:
@@ -36,7 +36,7 @@ def call_llm(prompt: str) -> Dict[str, Any]:
 
 def check_sms(sms_text: str) -> Dict[str, Any]:
     """ Проверка SMS на спам с помощью LLM """
-    
+
     ollama_resp = call_llm(create_prompt(sms_text))
 
     if "error" in ollama_resp:

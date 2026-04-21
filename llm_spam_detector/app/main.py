@@ -1,8 +1,8 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 
-from src.constants import *
-from src.models import *
-from src.llm import check_sms
+from app.src.constants import *
+from app.src.models import *
+from app.src.llm import check_sms
 
 
 app = FastAPI()
