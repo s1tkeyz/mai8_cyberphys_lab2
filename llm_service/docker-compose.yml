@@ -1,8 +1,0 @@
-services:
-    llm_spam_detector:
-      build: .
-      container_name: llm_spam_detector
-      ports:
-        - "8000:8000"
-        - "11434:11434"
-      restart: unless-stopped
